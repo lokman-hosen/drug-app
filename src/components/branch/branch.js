@@ -1,47 +1,43 @@
 import React from 'react'
-import Table from 'react-bootstrap/Table'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 
 class Branch extends React.Component {
     render() {
         return (
-            <Container>
-                <Row className="mt-4">
-                    <Col>
-                        <Table striped bordered hover>
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                        <table className="table">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td>1</td>
+                                <th scope="row">1</th>
                                 <td>Mark</td>
                                 <td>Otto</td>
                                 <td>@mdo</td>
                             </tr>
                             <tr>
-                                <td>2</td>
+                                <th scope="row">2</th>
                                 <td>Jacob</td>
                                 <td>Thornton</td>
                                 <td>@fat</td>
                             </tr>
                             <tr>
-                                <td>3</td>
+                                <th scope="row">3</th>
                                 <td colSpan="2">Larry the Bird</td>
                                 <td>@twitter</td>
                             </tr>
                             </tbody>
-                        </Table>
-                    </Col>
-                </Row>
-            </Container>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
         );
     }
