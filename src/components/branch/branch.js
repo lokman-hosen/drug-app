@@ -1,7 +1,31 @@
 import React from 'react'
+import axios from "axios";
 
 class Branch extends React.Component {
+    state = {
+        instituteList: []
+    }
+
+    componentDidMount() {
+        var self = this;
+        axios.get('http://localhost:3005/api/v1/institute-list')
+            .then(function (response) {
+                if (response){
+                    //console.log(response.data.instituteList)
+                    const instituteList = response.data.instituteList;
+                    //console.log(instituteList)
+                    self.setState({
+                        instituteList,
+                    });
+                }
+            }).catch(function (error) {
+                // handle error
+                console.log(error);
+            });
+    }
+
     render() {
+        //console.log(this.state.instituteList)
         return (
             <div className="container">
                 <div className="row">
@@ -16,23 +40,17 @@ class Branch extends React.Component {
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colSpan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
+                            {
+                                this.state.instituteList.map(item => (
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                ))
+                            }
+
                             </tbody>
                         </table>
                     </div>
