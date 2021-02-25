@@ -33,44 +33,49 @@ class Branch extends React.Component {
     }
 
     render() {
-        //console.log(this.state.instituteList)
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col-12"><h3>Hospital Branch List</h3> <br/></div>
-                    <div className="col-12">
-                        <table className="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Branch Name</th>
-                                <th scope="col">Hospital Name</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Contact</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                this.state.instituteList.map(item => (
-                                    <tr key={item.id}>
-                                        <th scope="row">{item.id}</th>
-                                        <td>{item.name}</td>
-                                        <td>{item.hospitalName}</td>
-                                        <td>{item.address}</td>
-                                        <td>{item.contact_numbers}</td>
-                                        <td>
-                                            <a className="btn btn-info btn-sm me-1" href="#" role="button">View</a>
-                                            <a className="btn btn-success btn-sm" href="#" role="button">Edit</a>
-                                        </td>
+                <div className="card">
+                    <div className="card-header">Hospital Branch List</div>
+                    <div className="card-body">
+                        <div className="row">
+                            <div className="col-12">
+                                <div className="text-end"><a className="btn btn-info btn-sm" href="/branch-create">+ Add New</a></div>
+                                <table className="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Branch Name</th>
+                                        <th scope="col">Hospital Name</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Contact</th>
+                                        <th scope="col">Action</th>
                                     </tr>
-                                ))
-                            }
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        this.state.instituteList.map(item => (
+                                            <tr key={item.id}>
+                                                <th scope="row">{item.id}</th>
+                                                <td>{item.name}</td>
+                                                <td>{item.hospitalName}</td>
+                                                <td>{item.address}</td>
+                                                <td>{item.contact_numbers}</td>
+                                                <td>
+                                                    <a className="btn btn-info btn-sm me-1" href="#" role="button">View</a>
+                                                    <a className="btn btn-success btn-sm" href="#" role="button">Edit</a>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
 
-                            </tbody>
-                        </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
         );
