@@ -57,7 +57,7 @@ class Branch extends React.Component {
                                                 <th scope="col">Hospital Name</th>
                                                 <th scope="col">Address</th>
                                                 <th scope="col">Contact</th>
-                                                <th scope="col">Action</th>
+                                                <th scope="col" className="action-column">Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>

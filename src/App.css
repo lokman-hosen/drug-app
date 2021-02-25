@@ -6,6 +6,9 @@
   height: 40vmin;
   pointer-events: none;
 }
+.action-column{
+  width: 10rem !important;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -36,3 +39,5 @@
     transform: rotate(360deg);
   }
 }
+
+
