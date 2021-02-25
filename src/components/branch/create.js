@@ -35,38 +35,42 @@ class BranchCreate extends React.Component {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
-                                <div className="text-end"><a className="btn btn-info btn-sm" href="branch">Back</a></div>
+                                <div className="text-end"><a className="btn btn-info btn-sm" href="/branch">Back</a></div>
                                 {!this.state.isLoading ?
                                     <form>
+
                                         <div className="mb-3">
-                                            <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                                            <input type="password" className="form-control" id="exampleInputPassword1"/>
+                                            <label htmlFor="name" className="form-label"><span className="text-danger">*</span> Name</label>
+                                            <input type="text" className="form-control" name="name" id="name" placeholder="Enter Branch Name" required/>
                                         </div>
                                         <div className="mb-3">
-                                            <label htmlFor="exampleInputEmail1" className="form-label">Hospital</label>
-                                            <select className="form-select" name="hospital_id">
+                                            <label htmlFor="exampleInputEmail1" className="form-label"><span className="text-danger">*</span> Select Hospital</label>
+                                            <select className="form-select" name="hospital_id" required>
                                                 <option selected>Select</option>
                                                 {(hospitals.length > 0) &&
                                                     hospitals.map(hospital => (
-                                                        <option value="1">{hospital.name}</option>
+                                                        <option key={hospital.id} value="1">{hospital.name}</option>
                                                     )
                                                 )
                                                 }
-
                                             </select>
                                         </div>
 
-                                        <div className="mb-3 form-check">
-                                            <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                                            <label className="form-check-label" htmlFor="exampleCheck1">Check me
-                                                out</label>
+                                        <div className="mb-3">
+                                            <label htmlFor="contact_numbers" className="form-label"><span className="text-danger">*</span> Branch Contact Number</label>
+                                            <input type="text" className="form-control" name="contact_numbers" id="contact_numbers" placeholder="Branch Contact Number" required/>
                                         </div>
-                                        <button type="submit" className="btn btn-primary btn-sm">Submit</button>
+                                        <div className="mb-3">
+                                            <label htmlFor="address" className="form-label"><span className="text-danger">*</span> Address</label>
+                                            <textarea type="text" className="form-control" name="address" id="address" placeholder="Branch Address" required></textarea>
+                                        </div>
+
+                                        <div className="text-end">
+                                            <button type="submit" className="btn btn-success btn-sm">Submit</button>
+                                        </div>
                                     </form>
 
                                     : <Loading />}
-
-
                             </div>
                         </div>
                     </div>
