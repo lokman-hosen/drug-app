@@ -1,15 +1,19 @@
 import React from 'react'
 import axios from "axios";
+import Loading from "../loading";
 
 class Branch extends React.Component {
     state = {
-        instituteList: []
+        instituteList: [],
+        isLoading: false
     }
 
     componentDidMount() {
+        this.setState({ isLoading: true})
         axios.get('http://localhost:3005/api/v1/institute-list').then(response => {
             this.setState({
-                instituteList:response.data.instituteList
+                instituteList:response.data.instituteList,
+                isLoading: false
             })
         }).catch(function (error) {
             // handle error
@@ -33,6 +37,8 @@ class Branch extends React.Component {
     }
 
     render() {
+        const instituteList =  this.state.instituteList;
+
         return (
             <div className="container">
                 <div className="card">
@@ -40,37 +46,44 @@ class Branch extends React.Component {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
-                                <div className="text-end"><a className="btn btn-info btn-sm" href="/branch-create">+ Add New</a></div>
-                                <table className="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Branch Name</th>
-                                        <th scope="col">Hospital Name</th>
-                                        <th scope="col">Address</th>
-                                        <th scope="col">Contact</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {
-                                        this.state.instituteList.map(item => (
-                                            <tr key={item.id}>
-                                                <th scope="row">{item.id}</th>
-                                                <td>{item.name}</td>
-                                                <td>{item.hospitalName}</td>
-                                                <td>{item.address}</td>
-                                                <td>{item.contact_numbers}</td>
-                                                <td>
-                                                    <a className="btn btn-info btn-sm me-1" href="#" role="button">View</a>
-                                                    <a className="btn btn-success btn-sm" href="#" role="button">Edit</a>
-                                                </td>
+                                {!this.state.isLoading ?
+                                    <div>
+                                        <div className="text-end"><a className="btn btn-info btn-sm" href="/branch-create">+ Add New</a></div>
+                                        <table className="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Branch Name</th>
+                                                <th scope="col">Hospital Name</th>
+                                                <th scope="col">Address</th>
+                                                <th scope="col">Contact</th>
+                                                <th scope="col">Action</th>
                                             </tr>
-                                        ))
-                                    }
+                                            </thead>
+                                            <tbody>
 
-                                    </tbody>
-                                </table>
+                                            {
+                                                instituteList.map(item => (
+                                                    <tr key={item.id}>
+                                                        <th scope="row">{item.id}</th>
+                                                        <td>{item.name}</td>
+                                                        <td>{item.hospitalName}</td>
+                                                        <td>{item.address}</td>
+                                                        <td>{item.contact_numbers}</td>
+                                                        <td>
+                                                            <a className="btn btn-info btn-sm me-1" href="#" role="button">View</a>
+                                                            <a className="btn btn-success btn-sm" href="#" role="button">Edit</a>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    : <Loading />
+                                }
+
                             </div>
                         </div>
                     </div>
