@@ -16,6 +16,7 @@ class BranchCreate extends React.Component {
     }
 
     componentDidMount() {
+        // get hospital list
          this.getHospitalList()
     }
 
@@ -32,6 +33,7 @@ class BranchCreate extends React.Component {
         });
     }
 
+    // set form value to state
     handleInput = (e) => {
         this.setState({[e.target.name]: e.target.value});
     }
@@ -64,7 +66,7 @@ class BranchCreate extends React.Component {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
-                                <div className="text-end"><a className="btn btn-info btn-sm" href="/branch">Back</a></div>
+                                <div className="text-end"><a className="btn btn-info btn-sm" href="/institute">Back</a></div>
                                 {!this.state.isLoading ?
                                     <form onSubmit={this.formSubmit}>
 
@@ -97,7 +99,7 @@ class BranchCreate extends React.Component {
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="address" className="form-label"><span className="text-danger">*</span> Address</label>
-                                            <textarea className="form-control" name="address" id="address"  value={this.state.address} placeholder="Branch Address"
+                                            <textarea className="form-control" name="address" id="address" value={this.state.address} placeholder="Branch Address"
                                                       onChange={this.handleInput}  required>{this.state.address}</textarea>
                                         </div>
 
