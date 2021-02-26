@@ -72,7 +72,7 @@ class Branch extends React.Component {
                                                         <td>{item.contact_numbers}</td>
                                                         <td>
                                                             <a className="btn btn-info btn-sm me-1" href="#" role="button">View</a>
-                                                            <a className="btn btn-success btn-sm" href="#" role="button">Edit</a>
+                                                            <a className="btn btn-success btn-sm" href={`/branch-edit/${item.id}`} role="button">Edit</a>
                                                         </td>
                                                     </tr>
                                                 ))
