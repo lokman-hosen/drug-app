@@ -9,6 +9,7 @@ class BranchEdit extends React.Component {
         hospitalList: [],
         isLoading: false,
 
+        id: '',
         name: '',
         hospital_id: '',
         address: '',
@@ -39,6 +40,7 @@ class BranchEdit extends React.Component {
     getBranchById(branchId){
         axios.get('http://localhost:3005/api/v1/institute/'+branchId).then(response => {
             this.setState({
+                id: response.data.institute.id,
                 name: response.data.institute.name,
                 hospital_id: response.data.institute.hospital_id,
                 address: response.data.institute.address,
@@ -59,16 +61,16 @@ class BranchEdit extends React.Component {
     updateBranch = (e) =>{
         e.preventDefault();
         const { history} = this.props;
-        const id = this.props.match.params.id;
+        //const id = this.props.match.params.id;
 
-        axios.post('http://localhost:3005/api/v1/institute', {
+        axios.put('http://localhost:3005/api/v1/institute/'+this.state.id, {
             name: this.state.name,
             hospital_id: this.state.hospital_id,
             address: this.state.address,
             contact_numbers: this.state.contact_numbers,
         })
             .then(function (response) {
-                history.push("/branch");
+                history.push("/institute");
             })
             .catch(function (error) {
                 console.log(error);
@@ -86,7 +88,7 @@ class BranchEdit extends React.Component {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
-                                <div className="text-end"><a className="btn btn-info btn-sm" href="/branch">Back</a></div>
+                                <div className="text-end"><a className="btn btn-info btn-sm" href="/institute">Back</a></div>
                                 {!this.state.isLoading ?
                                     <form onSubmit={this.updateBranch}>
 
@@ -101,10 +103,10 @@ class BranchEdit extends React.Component {
                                             <select className="form-select" name="hospital_id"
                                                     value={this.state.hospital_id} onChange={this.handleInput}
                                                     required>
-                                                <option>Select</option>
+                                                <option disabled>---Select---</option>
                                                 {(hospitals.length > 0) &&
                                                     hospitals.map(hospital => (
-                                                        <option key={hospital.id} value="1">{hospital.name}</option>
+                                                        <option key={hospital.id} value={hospital.id}>{hospital.name}</option>
                                                     )
                                                 )
                                                 }
@@ -119,7 +121,9 @@ class BranchEdit extends React.Component {
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="address" className="form-label"><span className="text-danger">*</span> Address</label>
-                                            <textarea className="form-control" name="address" id="address" placeholder="Branch Address"
+                                            <textarea className="form-control" name="address" id="address"
+                                                      placeholder="Branch Address"
+                                                      value={this.state.address}
                                                       onChange={this.handleInput}  required>{this.state.address}</textarea>
                                         </div>
 
