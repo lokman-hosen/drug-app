@@ -39,20 +39,14 @@ class BranchCreate extends React.Component {
     formSubmit = (e) =>{
         e.preventDefault();
         const { history} = this.props;
-        /*const branchData = {
-            name: this.state.name,
-            hospital_id: this.state.hospital_id,
-            address: this.state.address,
-            contact_numbers: this.state.contact_numbers,
-        }*/
-        axios.post('http://localhost:3005/api/v1/add-institution', {
+        axios.post('http://localhost:3005/api/v1/institute', {
             name: this.state.name,
             hospital_id: this.state.hospital_id,
             address: this.state.address,
             contact_numbers: this.state.contact_numbers,
         })
             .then(function (response) {
-                history.push("/branch");
+                history.push("/institute");
             })
             .catch(function (error) {
                 console.log(error);
@@ -82,7 +76,7 @@ class BranchCreate extends React.Component {
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="hospitalId" className="form-label"><span className="text-danger">*</span> Select Hospital</label>
-                                            <select className="form-select" name="hospital_id"
+                                            <select className="form-select" value={this.state.hospital_id} name="hospital_id"
                                                     value={this.state.hospital_id} onChange={this.handleInput}
                                                     required>
                                                 <option selected>Select</option>
@@ -103,7 +97,7 @@ class BranchCreate extends React.Component {
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="address" className="form-label"><span className="text-danger">*</span> Address</label>
-                                            <textarea className="form-control" name="address" id="address" placeholder="Branch Address"
+                                            <textarea className="form-control" name="address" id="address"  value={this.state.address} placeholder="Branch Address"
                                                       onChange={this.handleInput}  required>{this.state.address}</textarea>
                                         </div>
 

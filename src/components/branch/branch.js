@@ -10,7 +10,7 @@ class Branch extends React.Component {
 
     componentDidMount() {
         this.setState({ isLoading: true})
-        axios.get('http://localhost:3005/api/v1/institute-list').then(response => {
+        axios.get('http://localhost:3005/api/v1/institute').then(response => {
             this.setState({
                 instituteList:response.data.instituteList,
                 isLoading: false
@@ -48,7 +48,7 @@ class Branch extends React.Component {
                             <div className="col-12">
                                 {!this.state.isLoading ?
                                     <div>
-                                        <div className="text-end"><a className="btn btn-info btn-sm" href="/branch-create">+ Add New</a></div>
+                                        <div className="text-end"><a className="btn btn-info btn-sm" href="/institute/create">+ Add New</a></div>
                                         <table className="table">
                                             <thead>
                                             <tr>
@@ -72,7 +72,7 @@ class Branch extends React.Component {
                                                         <td>{item.contact_numbers}</td>
                                                         <td>
                                                             <a className="btn btn-info btn-sm me-1" href="#" role="button">View</a>
-                                                            <a className="btn btn-success btn-sm" href={`/branch-edit/${item.id}`} role="button">Edit</a>
+                                                            <a className="btn btn-success btn-sm" href={`/institute/${item.id}/edit`} role="button">Edit</a>
                                                         </td>
                                                     </tr>
                                                 ))

@@ -37,7 +37,7 @@ class BranchEdit extends React.Component {
 
     // get hospital branch by id and set values to state
     getBranchById(branchId){
-        axios.get('http://localhost:3005/api/v1/institution/'+branchId).then(response => {
+        axios.get('http://localhost:3005/api/v1/institute/'+branchId).then(response => {
             this.setState({
                 name: response.data.institute.name,
                 hospital_id: response.data.institute.hospital_id,
@@ -61,7 +61,7 @@ class BranchEdit extends React.Component {
         const { history} = this.props;
         const id = this.props.match.params.id;
 
-        axios.post('http://localhost:3005/api/v1/add-institution', {
+        axios.post('http://localhost:3005/api/v1/institute', {
             name: this.state.name,
             hospital_id: this.state.hospital_id,
             address: this.state.address,
@@ -101,7 +101,7 @@ class BranchEdit extends React.Component {
                                             <select className="form-select" name="hospital_id"
                                                     value={this.state.hospital_id} onChange={this.handleInput}
                                                     required>
-                                                <option selected>Select</option>
+                                                <option>Select</option>
                                                 {(hospitals.length > 0) &&
                                                     hospitals.map(hospital => (
                                                         <option key={hospital.id} value="1">{hospital.name}</option>
@@ -124,7 +124,7 @@ class BranchEdit extends React.Component {
                                         </div>
 
                                         <div className="text-end">
-                                            <button type="submit" className="btn btn-success btn-sm">Submit</button>
+                                            <button type="submit" className="btn btn-success btn-sm">Update</button>
                                         </div>
                                     </form>
 

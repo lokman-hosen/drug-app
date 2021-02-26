@@ -14,8 +14,8 @@ function App() {
         <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/branch" component={Branch} exact />
-        <Route path="/branch-create" component={BranchCreate} exact />
-        <Route path="/branch-edit/:id" component={BranchEdit} exact />
+        <Route path="/institute/create" component={BranchCreate} exact />
+        <Route path="/institute/:id/edit" component={BranchEdit} exact />
       </Switch>
     </div>
   );
