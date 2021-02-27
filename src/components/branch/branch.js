@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from "axios";
 import Loading from "../loading";
+import AlertMessage from "../alertMessage";
 
 class Branch extends React.Component {
     state = {
@@ -10,15 +11,9 @@ class Branch extends React.Component {
 
     componentDidMount() {
         this.setState({ isLoading: true})
-        axios.get('http://localhost:3005/api/v1/institute').then(response => {
-            this.setState({
-                instituteList:response.data.instituteList,
-                isLoading: false
-            })
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        });
+
+        this.getBranchList()
+
         //var self = this;
        /* axios.get('http://localhost:3005/api/v1/institute-list')
             .then(function (response) {
@@ -34,6 +29,32 @@ class Branch extends React.Component {
                 // handle error
                 console.log(error);
             });*/
+    }
+
+
+    deleteItem = (id) => {
+        axios.delete('http://localhost:3005/api/v1/institute/'+id)
+            .then(function (response) {
+                if (response){
+                    window.location.reload();
+                }
+            }).catch(function (error) {
+            // handle error
+            console.log(error);
+        });
+    }
+
+    getBranchList(){
+
+        axios.get('http://localhost:3005/api/v1/institute').then(response => {
+            this.setState({
+                instituteList:response.data.instituteList,
+                isLoading: false
+            })
+        }).catch(function (error) {
+            // handle error
+            console.log(error);
+        });
     }
 
     render() {
@@ -63,15 +84,15 @@ class Branch extends React.Component {
                                             <tbody>
 
                                             {
-                                                instituteList.map(item => (
+                                                instituteList.map((item, index) => (
                                                     <tr key={item.id}>
-                                                        <th scope="row">{item.id}</th>
+                                                        <th scope="row">{index + 1}</th>
                                                         <td>{item.name}</td>
                                                         <td>{item.hospitalName}</td>
                                                         <td>{item.address}</td>
                                                         <td>{item.contact_numbers}</td>
                                                         <td>
-                                                            <a className="btn btn-info btn-sm me-1" href="#" role="button">View</a>
+                                                            <button className="btn btn-danger btn-sm me-1" type="button" onClick={() => this.deleteItem(item.id)}>Delete</button>
                                                             <a className="btn btn-success btn-sm" href={`/institute/${item.id}/edit`} role="button">Edit</a>
                                                         </td>
                                                     </tr>

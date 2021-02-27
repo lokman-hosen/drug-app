@@ -2,6 +2,7 @@ import React from 'react'
 import axios from "axios";
 import Loading from "../loading";
 import { NavLink, withRouter } from "react-router-dom";
+import AlertMessage from "../alertMessage";
 
 
 class BranchCreate extends React.Component {
