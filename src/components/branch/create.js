@@ -2,7 +2,6 @@ import React from 'react'
 import axios from "axios";
 import Loading from "../loading";
 import { NavLink, withRouter } from "react-router-dom";
-import AlertMessage from "../alertMessage";
 
 
 class BranchCreate extends React.Component {
@@ -14,6 +13,8 @@ class BranchCreate extends React.Component {
         hospital_id: '',
         address: '',
         contact_numbers: '',
+        errors: {},
+       // nameError: '',
     }
 
     componentDidMount() {
@@ -39,21 +40,38 @@ class BranchCreate extends React.Component {
         this.setState({[e.target.name]: e.target.value});
     }
 
+
     formSubmit = (e) =>{
         e.preventDefault();
         const { history} = this.props;
+
         axios.post('http://localhost:3005/api/v1/institute', {
             name: this.state.name,
             hospital_id: this.state.hospital_id,
             address: this.state.address,
             contact_numbers: this.state.contact_numbers,
         })
-            .then(function (response) {
+            .then((response) => {
                 history.push("/institute");
             })
-            .catch(function (error) {
-                console.log(error);
-            });
+            .catch((err) => {
+                console.log("Error: ", err.response.data.errors);
+                this.setState({
+                    errors: err.response.data.errors,
+                });
+            })
+        /*axios.post('http://localhost:3005/api/v1/institute', {
+            name: this.state.name,
+            hospital_id: this.state.hospital_id,
+            address: this.state.address,
+            contact_numbers: this.state.contact_numbers,
+        }).then(function (response) {
+                    history.push("/institute");
+            }).catch(function (error) {
+                this.handleInput(e)
+                //this.errors = error.response.errors
+                //console.log(error.response);
+            });*/
     }
 
     render() {
@@ -75,13 +93,15 @@ class BranchCreate extends React.Component {
                                             <label htmlFor="name" className="form-label"><span className="text-danger">*</span> Name</label>
                                             <input type="text" className="form-control" name="name" id="name"
                                                    value={this.state.name} onChange={this.handleInput}
-                                                   placeholder="Enter Branch Name" required/>
+                                                   placeholder="Enter Branch Name" />
+                                            {this.state.errors.name && <div className="text-danger">{this.state.errors.name[0]}</div>}
+
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="hospitalId" className="form-label"><span className="text-danger">*</span> Select Hospital</label>
                                             <select className="form-select" value={this.state.hospital_id} name="hospital_id"
                                                     value={this.state.hospital_id} onChange={this.handleInput}
-                                                    required>
+                                                    >
                                                 <option selected>Select</option>
                                                 {(hospitals.length > 0) &&
                                                     hospitals.map(hospital => (
@@ -90,18 +110,21 @@ class BranchCreate extends React.Component {
                                                 )
                                                 }
                                             </select>
+                                            {this.state.errors.hospital_id && <div className="text-danger">{this.state.errors.hospital_id[0]}</div>}
                                         </div>
 
                                         <div className="mb-3">
                                             <label htmlFor="contact_numbers" className="form-label"><span className="text-danger">*</span> Branch Contact Number</label>
                                             <input type="text" className="form-control" name="contact_numbers" id="contact_numbers"
                                                    value={this.state.contact_numbers} onChange={this.handleInput}
-                                                   placeholder="Branch Contact Number" required/>
+                                                   placeholder="Branch Contact Number" />
+                                            {this.state.errors.contact_numbers && <div className="text-danger">{this.state.errors.contact_numbers[0]}</div>}
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="address" className="form-label"><span className="text-danger">*</span> Address</label>
                                             <textarea className="form-control" name="address" id="address" value={this.state.address} placeholder="Branch Address"
-                                                      onChange={this.handleInput}  required>{this.state.address}</textarea>
+                                                      onChange={this.handleInput}  >{this.state.address}</textarea>
+                                            {this.state.errors.address && <div className="text-danger">{this.state.errors.address[0]}</div>}
                                         </div>
 
                                         <div className="text-end">
