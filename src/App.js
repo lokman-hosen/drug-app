@@ -6,6 +6,7 @@ import Branch from "./components/branch/branch";
 import Navbar from "./components/header/navbar";
 import BranchCreate from "./components/branch/create";
 import BranchEdit from "./components/branch/edit";
+import AlertMessage from "./components/alertMessage";
 
 function App() {
   return (

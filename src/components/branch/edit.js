@@ -2,6 +2,7 @@ import React from 'react'
 import axios from "axios";
 import Loading from "../loading";
 import { NavLink, withRouter } from "react-router-dom";
+import AlertMessage from "../alertMessage";
 
 
 class BranchEdit extends React.Component {
@@ -86,7 +87,7 @@ class BranchEdit extends React.Component {
             <div className="container">
 
                 <div className="card">
-                    <div className="card-header">Create Hospital Branch</div>
+                    <div className="card-header">Edit Hospital Branch</div>
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
