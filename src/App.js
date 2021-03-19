@@ -6,7 +6,8 @@ import Branch from "./components/branch/branch";
 import Navbar from "./components/header/navbar";
 import BranchCreate from "./components/branch/create";
 import BranchEdit from "./components/branch/edit";
-import AlertMessage from "./components/alertMessage";
+import Hospital from "./components/hospital/list";
+import HospitalDetail from "./components/hospital/view";
 
 function App() {
   return (
@@ -14,6 +15,10 @@ function App() {
         <Navbar />
         <Switch>
         <Route path="/" component={Home} exact />
+        <Route path="/hospital" component={Hospital} exact />
+        <Route path="/hospital/:id" component={HospitalDetail} exact />
+
+
         <Route path="/institute" component={Branch} exact />
         <Route path="/institute/create" component={BranchCreate} exact />
         <Route path="/institute/:id/edit" component={BranchEdit} exact />
