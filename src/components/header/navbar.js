@@ -15,6 +15,7 @@ function Navbar() {
                     <Link className="nav-link" to="/hospital">Hospitals</Link>
                     <Link className="nav-link" to="/institute">Branches</Link>
                     <Link className="nav-link" to="/drug">Drugs</Link>
+                    <Link className="nav-link" to="/branding">Advertisement</Link>
                 </div>
                 </div>
             </div>

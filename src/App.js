@@ -9,6 +9,7 @@ import BranchEdit from "./components/branch/edit";
 import Hospital from "./components/hospital/list";
 import HospitalDetail from "./components/hospital/view";
 import Drug from "./components/drugs/list";
+import Advertisement from "./components/branding/list";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/hospital/:id" component={HospitalDetail} exact />
 
         <Route path="/drug" component={Drug} exact />
+        <Route path="/branding" component={Advertisement} exact />
 
 
         <Route path="/institute" component={Branch} exact />
