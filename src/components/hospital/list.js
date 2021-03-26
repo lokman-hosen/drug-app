@@ -1,11 +1,19 @@
 import React from 'react'
 import axios from "axios";
 import Loading from "../loading";
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+
+
 
 class Hospital extends React.Component {
     state = {
         hospitalList: [],
-        isLoading: false
+        isLoading: false,
+       /* page: 1,
+        data: [],
+        sizePerPage: 10,
+        totalRecord: 0,*/
     }
 
     componentDidMount() {
@@ -18,6 +26,7 @@ class Hospital extends React.Component {
         axios.get('http://localhost:3005/api/v1/hospital').then(response => {
             this.setState({
                 hospitalList:response.data.hospitalList,
+                 //data: response.data.hospitalList.slice(0, 10),
                 isLoading: false
             })
         }).catch(function (error) {
@@ -26,8 +35,54 @@ class Hospital extends React.Component {
         });
     }
 
+
     render() {
+        const columns = [
+            {
+                dataField: 'id',
+                text: 'Sr No',
+                sort: true
+            },
+            {
+                dataField: 'name',
+                text: 'Name',
+                sort: true
+            },
+            {
+                dataField: 'categoryName',
+                text: 'Category',
+                sort: true
+            },
+            {
+                dataField: 'Action',
+                isDummyField: true,
+                text: 'Action',
+                formatter: (cellContent, row) => {
+                    // console.log(row.id);
+                    return (
+                        <h5>
+                            <a className="btn btn-success btn-sm py-0" target="_blank" href={`/hospital/${row.id}`} role="button"><i className="fa fa-eye"></i></a>
+                        </h5>
+                    );
+                }
+            },
+        ];
+
+
+
         const hospitalList =  this.state.hospitalList;
+        /*const options = {
+            onSizePerPageChange: (sizePerPage, page) => {
+                console.log('Size per page change!!!');
+                console.log('Newest size per page:' + sizePerPage);
+                console.log('Newest page:' + page);
+            },
+            onPageChange: (page, sizePerPage) => {
+                console.log('Page change!!!');
+                console.log('Newest size per page:' + sizePerPage);
+                console.log('Newest page:' + page);
+            }
+        };*/
 
         return (
             <div className="container">
@@ -36,42 +91,17 @@ class Hospital extends React.Component {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
-                                {!this.state.isLoading ?
-                                    <div>
-                                        <table className="table">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Hospital Name</th>
-                                                <th scope="col">Category</th>
-                                                <th scope="col" className="action-column">Action</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            {
-                                                hospitalList.map((hospital, index) => (
-                                                    <tr key={hospital.id}>
-                                                        <th scope="row">{index + 1}</th>
-                                                        <td>{hospital.name}</td>
-                                                        <td>{hospital.categoryName}</td>
-                                                        <td>
-                                                            <a className="btn btn-success btn-sm" href={`/hospital/${hospital.id}`} role="button">View</a>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            }
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    : <Loading />
-                                }
-
+                                <BootstrapTable
+                                    keyField="id"
+                                    data={ hospitalList }
+                                    columns={ columns }
+                                    pagination={ paginationFactory() }
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
+
 
             </div>
 
