@@ -7,13 +7,16 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 
 
 class Hospital extends React.Component {
-    state = {
-        hospitalList: [],
-        isLoading: false,
-       /* page: 1,
-        data: [],
-        sizePerPage: 10,
-        totalRecord: 0,*/
+    constructor(props) {
+        super(props);
+        this.state = {
+            hospitalList: [],
+            isLoading: false,
+            page: 1,
+            //data: products.slice(0, 10),
+            sizePerPage: 10,
+            totalRecord: 11,
+        };
     }
 
     componentDidMount() {
@@ -23,9 +26,13 @@ class Hospital extends React.Component {
 
 
     getHospitalList(){
-        axios.get('http://localhost:3005/api/v1/hospital').then(response => {
+        const pageNumber = this.state.page;
+        console.log('pageNumber-'+pageNumber)
+        axios.get('http://localhost:3005/api/v1/hospital?page='+pageNumber).then(response => {
+            console.log(response.data.hospitalList);
             this.setState({
                 hospitalList:response.data.hospitalList,
+                //totalRecord:response.data.hospitalList,
                  //data: response.data.hospitalList.slice(0, 10),
                 isLoading: false
             })
@@ -34,9 +41,39 @@ class Hospital extends React.Component {
             console.log(error);
         });
     }
+    handleTableChange = (type, { page, sizePerPage }) => {
+        console.log('page-'+ page)
+        this.setState({
+            page: page,
+        });
+        const currentIndex = (page - 1) * sizePerPage;
+        setTimeout(() => {
+            this.setState(() => ({
+                page,
+                //data: products.slice(currentIndex, currentIndex + sizePerPage),
+                data: this.getHospitalList(),
+                sizePerPage
+            }));
+        }, 2000);
+    }
+
+
 
 
     render() {
+        const RemotePagination = ({ data, page, sizePerPage, onTableChange, totalSize }) => (
+            <div>
+                <BootstrapTable
+                    remote
+                    keyField="id"
+                    data={ data }
+                    columns={ columns }
+                    pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
+                    onTableChange={ onTableChange }
+                />
+            </div>
+        );
+
         const columns = [
             {
                 dataField: 'id',
@@ -70,19 +107,8 @@ class Hospital extends React.Component {
 
 
 
-        const hospitalList =  this.state.hospitalList;
-        /*const options = {
-            onSizePerPageChange: (sizePerPage, page) => {
-                console.log('Size per page change!!!');
-                console.log('Newest size per page:' + sizePerPage);
-                console.log('Newest page:' + page);
-            },
-            onPageChange: (page, sizePerPage) => {
-                console.log('Page change!!!');
-                console.log('Newest size per page:' + sizePerPage);
-                console.log('Newest page:' + page);
-            }
-        };*/
+        //const hospitalList =  this.state.hospitalList;
+        const { hospitalList, sizePerPage, page, totalRecord } = this.state;
 
         return (
             <div className="container">
@@ -91,11 +117,12 @@ class Hospital extends React.Component {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
-                                <BootstrapTable
-                                    keyField="id"
+                                <RemotePagination
                                     data={ hospitalList }
-                                    columns={ columns }
-                                    pagination={ paginationFactory() }
+                                    page={ page }
+                                    sizePerPage={ sizePerPage }
+                                    totalSize={ totalRecord }
+                                    onTableChange={ this.handleTableChange }
                                 />
                             </div>
                         </div>
