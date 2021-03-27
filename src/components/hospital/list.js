@@ -15,7 +15,7 @@ class Hospital extends React.Component {
             page: 1,
             //data: products.slice(0, 10),
             sizePerPage: 10,
-            totalRecord: 11,
+            totalRecord: 0,
         };
     }
 
@@ -32,7 +32,7 @@ class Hospital extends React.Component {
             console.log(response.data.hospitalList);
             this.setState({
                 hospitalList:response.data.hospitalList,
-                //totalRecord:response.data.hospitalList,
+                totalRecord:response.data.totalItem,
                  //data: response.data.hospitalList.slice(0, 10),
                 isLoading: false
             })
@@ -46,15 +46,15 @@ class Hospital extends React.Component {
         this.setState({
             page: page,
         });
-        const currentIndex = (page - 1) * sizePerPage;
+       // const currentIndex = (page - 1) * sizePerPage;
         setTimeout(() => {
             this.setState(() => ({
-                page,
+                //page,
                 //data: products.slice(currentIndex, currentIndex + sizePerPage),
                 data: this.getHospitalList(),
-                sizePerPage
+                //sizePerPage
             }));
-        }, 2000);
+        }, 100);
     }
 
 
@@ -95,7 +95,6 @@ class Hospital extends React.Component {
                 isDummyField: true,
                 text: 'Action',
                 formatter: (cellContent, row) => {
-                    // console.log(row.id);
                     return (
                         <h5>
                             <a className="btn btn-success btn-sm py-0" target="_blank" href={`/hospital/${row.id}`} role="button"><i className="fa fa-eye"></i></a>
@@ -106,8 +105,6 @@ class Hospital extends React.Component {
         ];
 
 
-
-        //const hospitalList =  this.state.hospitalList;
         const { hospitalList, sizePerPage, page, totalRecord } = this.state;
 
         return (
@@ -128,8 +125,6 @@ class Hospital extends React.Component {
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
         );
