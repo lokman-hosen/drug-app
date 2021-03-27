@@ -13,7 +13,6 @@ class Hospital extends React.Component {
             hospitalList: [],
             isLoading: false,
             page: 1,
-            //data: products.slice(0, 10),
             sizePerPage: 10,
             totalRecord: 0,
         };
@@ -27,13 +26,10 @@ class Hospital extends React.Component {
 
     getHospitalList(){
         const pageNumber = this.state.page;
-        console.log('pageNumber-'+pageNumber)
         axios.get('http://localhost:3005/api/v1/hospital?page='+pageNumber).then(response => {
-            console.log(response.data.hospitalList);
             this.setState({
                 hospitalList:response.data.hospitalList,
                 totalRecord:response.data.totalItem,
-                 //data: response.data.hospitalList.slice(0, 10),
                 isLoading: false
             })
         }).catch(function (error) {
@@ -41,18 +37,16 @@ class Hospital extends React.Component {
             console.log(error);
         });
     }
+    // call this function when click on pagination button
     handleTableChange = (type, { page, sizePerPage }) => {
-        console.log('page-'+ page)
         this.setState({
             page: page,
+            isLoading: true
         });
-       // const currentIndex = (page - 1) * sizePerPage;
+        // get data for next page
         setTimeout(() => {
             this.setState(() => ({
-                //page,
-                //data: products.slice(currentIndex, currentIndex + sizePerPage),
                 data: this.getHospitalList(),
-                //sizePerPage
             }));
         }, 100);
     }
@@ -61,6 +55,7 @@ class Hospital extends React.Component {
 
 
     render() {
+
         const RemotePagination = ({ data, page, sizePerPage, onTableChange, totalSize }) => (
             <div>
                 <BootstrapTable
@@ -74,6 +69,7 @@ class Hospital extends React.Component {
             </div>
         );
 
+        // columns want to display in table
         const columns = [
             {
                 dataField: 'id',
@@ -105,6 +101,7 @@ class Hospital extends React.Component {
         ];
 
 
+        // take all values from state
         const { hospitalList, sizePerPage, page, totalRecord } = this.state;
 
         return (
@@ -112,17 +109,20 @@ class Hospital extends React.Component {
                 <div className="card">
                     <div className="card-header">Hospital Hospital List</div>
                     <div className="card-body">
-                        <div className="row">
-                            <div className="col-12">
-                                <RemotePagination
-                                    data={ hospitalList }
-                                    page={ page }
-                                    sizePerPage={ sizePerPage }
-                                    totalSize={ totalRecord }
-                                    onTableChange={ this.handleTableChange }
-                                />
+                        {!this.state.isLoading ?
+                            <div className="row">
+                                <div className="col-12">
+                                    <RemotePagination
+                                        data={ hospitalList }
+                                        page={ page }
+                                        sizePerPage={ sizePerPage }
+                                        totalSize={ totalRecord }
+                                        onTableChange={ this.handleTableChange }
+                                    />
+                                </div>
                             </div>
-                        </div>
+                            : <Loading />
+                        }
                     </div>
                 </div>
             </div>
