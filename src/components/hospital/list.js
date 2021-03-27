@@ -26,7 +26,12 @@ class Hospital extends React.Component {
 
     getHospitalList(){
         const pageNumber = this.state.page;
-        axios.get('http://localhost:3005/api/v1/hospital?page='+pageNumber).then(response => {
+        axios.get('http://localhost:3005/api/v1/hospital?page='+pageNumber, {
+            // sent how much record will get to show a page
+            params: {
+                sizePerPage: this.state.sizePerPage
+            }
+        }).then(response => {
             this.setState({
                 hospitalList:response.data.hospitalList,
                 totalRecord:response.data.totalItem,
@@ -39,8 +44,10 @@ class Hospital extends React.Component {
     }
     // call this function when click on pagination button
     handleTableChange = (type, { page, sizePerPage }) => {
+        console.log(sizePerPage)
         this.setState({
             page: page,
+            sizePerPage: sizePerPage,
             isLoading: true
         });
         // get data for next page
