@@ -3,6 +3,8 @@ import axios from "axios";
 import Loading from "../loading";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import filterFactory, { textFilter, Comparator } from 'react-bootstrap-table2-filter';
+
 
 class Branch extends React.Component {
     constructor(props) {
@@ -11,9 +13,10 @@ class Branch extends React.Component {
             instituteList: [],
             isLoading: false,
             page: 1,
-            sizePerPage: 10,
-            totalRecord: 0,
+            sizePerPage: 5,
+            totalRecord: 50,
         };
+        this.handleTableChange = this.handleTableChange.bind(this);
     }
 
     componentDidMount() {
@@ -66,34 +69,85 @@ class Branch extends React.Component {
     }
 
     // call this function when click on pagination button
-    handleTableChange = (type, { page, sizePerPage }) => {
-        console.log(sizePerPage)
-        this.setState({
-            page: page,
-            sizePerPage: sizePerPage,
-            isLoading: true
-        });
-        // get data for next page
+    handleTableChange = (type, { page, sizePerPage, filters, sortField, sortOrder, cellEdit }) => {
+        const currentIndex = (page - 1) * sizePerPage;
+        console.log(sortOrder);
         setTimeout(() => {
+
+            let result = this.state.instituteList;
+            // Handle column filters
+            result = result.filter((row) => {
+                console.log('11')
+                let valid = true;
+                for (const dataField in filters) {
+                    const { filterVal, filterType, comparator } = filters[dataField];
+
+                    if (filterType === 'TEXT') {
+                        if (comparator === Comparator.LIKE) {
+                            valid = row[dataField].toString().indexOf(filterVal) > -1;
+                        } else {
+                            valid = row[dataField] === filterVal;
+                        }
+                    }
+                    if (!valid) break;
+                }
+                return valid;
+            });
+            // Handle column sort
+            if (sortOrder === 'asc') {
+                console.log('55')
+                result = result.sort((a, b) => {
+                    if (a[sortField] > b[sortField]) {
+                        return 1;
+                    } else if (b[sortField] > a[sortField]) {
+                        return -1;
+                    }
+                    return 0;
+                });
+            } else {
+                console.log('66')
+                result = result.sort((a, b) => {
+                    if (a[sortField] > b[sortField]) {
+                        return -1;
+                    } else if (b[sortField] > a[sortField]) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            }
             this.setState(() => ({
-                data: this.getBranchList(),
+                page,
+                instituteList: result,
+                totalSize: 20,
+                sizePerPage
             }));
         }, 100);
     }
 
     render() {
-        const RemotePagination = ({ data, page, sizePerPage, onTableChange, totalSize }) => (
+        const RemoteAll = ({ data, page, sizePerPage, onTableChange, totalSize }) => (
             <div>
                 <BootstrapTable
+                    bootstrap4
                     remote
                     keyField="id"
                     data={ data }
                     columns={ columns }
+                    filter={ filterFactory() }
                     pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
                     onTableChange={ onTableChange }
+                    //defaultSortDirection="asc"
                 />
             </div>
         );
+
+        /*RemoteAll.propTypes = {
+            data: PropTypes.array.isRequired,
+            page: PropTypes.number.isRequired,
+            totalSize: PropTypes.number.isRequired,
+            sizePerPage: PropTypes.number.isRequired,
+            onTableChange: PropTypes.func.isRequired
+        };*/
 
         // columns want to display in table
         const columns = [
@@ -104,14 +158,20 @@ class Branch extends React.Component {
             {
                 dataField: 'name',
                 text: 'Branch Name',
+                //filter: textFilter(),
+                sort: true
             },
             {
                 dataField: 'hospitalName',
                 text: 'Hospital Name',
+                //filter: textFilter(),
+                sort: true
             },
             {
                 dataField: 'address',
                 text: 'Address',
+                //filter: textFilter(),
+                sort: true
             },
             {
                 dataField: 'contact_numbers',
@@ -136,8 +196,14 @@ class Branch extends React.Component {
             },
         ];
 
+        const defaultSorted = [{
+            dataField: 'name',
+            order: 'desc'
+        }];
+
         // take all values from state
-        const { instituteList, sizePerPage, page, totalRecord } = this.state;
+        //const { instituteList, sizePerPage, page, totalRecord } = this.state;
+        const { instituteList, sizePerPage, page , totalRecord} = this.state;
 
         return (
             <div className="container">
@@ -147,7 +213,15 @@ class Branch extends React.Component {
                         {!this.state.isLoading ?
                             <div className="row">
                                 <div className="col-12">
-                                    <RemotePagination
+                                    {/*<RemotePagination
+                                        data={ instituteList }
+                                        page={ page }
+                                        sizePerPage={ sizePerPage }
+                                        totalSize={ totalRecord }
+                                        onTableChange={ this.handleTableChange }
+                                    />*/}
+
+                                    <RemoteAll
                                         data={ instituteList }
                                         page={ page }
                                         sizePerPage={ sizePerPage }
