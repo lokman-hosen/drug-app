@@ -66,6 +66,7 @@ class Hospital extends React.Component {
         const RemotePagination = ({ data, page, sizePerPage, onTableChange, totalSize }) => (
             <div>
                 <BootstrapTable
+                    bootstrap4
                     remote
                     keyField="id"
                     data={ data }
