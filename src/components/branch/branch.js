@@ -72,59 +72,73 @@ class Branch extends React.Component {
     // call this function when click on pagination button
     handleTableChange = (type, { page, sizePerPage, filters, sortField, sortOrder, cellEdit }) => {
         const currentIndex = (page - 1) * sizePerPage;
-        //get sortOrder from state to sort randomly
-        var item = this.state.sortOrder.sort(function() {return 0.5 - Math.random()})[0];
-        console.log(sortOrder);
-        setTimeout(() => {
-            const sortOrder = item
-            let result = this.state.instituteList;
-            // Handle column filters
-            /*result = result.filter((row) => {
-                console.log('11')
-                let valid = true;
-                for (const dataField in filters) {
-                    const { filterVal, filterType, comparator } = filters[dataField];
+        console.log('sortField'+sortField)
+        if (sortField != null){
+            //get sortOrder from state to sort randomly
+            var item = this.state.sortOrder.sort(function() {return 0.5 - Math.random()})[0];
+            setTimeout(() => {
+                const sortOrder = item
+                let result = this.state.instituteList;
+                // Handle column filters
+                /*result = result.filter((row) => {
+                    console.log('11')
+                    let valid = true;
+                    for (const dataField in filters) {
+                        const { filterVal, filterType, comparator } = filters[dataField];
 
-                    if (filterType === 'TEXT') {
-                        if (comparator === Comparator.LIKE) {
-                            valid = row[dataField].toString().indexOf(filterVal) > -1;
-                        } else {
-                            valid = row[dataField] === filterVal;
+                        if (filterType === 'TEXT') {
+                            if (comparator === Comparator.LIKE) {
+                                valid = row[dataField].toString().indexOf(filterVal) > -1;
+                            } else {
+                                valid = row[dataField] === filterVal;
+                            }
                         }
+                        if (!valid) break;
                     }
-                    if (!valid) break;
+                    return valid;
+                });*/
+                // Handle column sort
+                if (sortOrder === 'asc') {
+                    console.log('55')
+                    result = result.sort((a, b) => {
+                        if (a[sortField] > b[sortField]) {
+                            return 1;
+                        } else if (b[sortField] > a[sortField]) {
+                            return -1;
+                        }
+                        return 0;
+                    });
+                } else {
+                    console.log('66')
+                    result = result.sort((a, b) => {
+                        if (a[sortField] > b[sortField]) {
+                            return -1;
+                        } else if (b[sortField] > a[sortField]) {
+                            return 1;
+                        }
+                        return 0;
+                    });
                 }
-                return valid;
-            });*/
-            // Handle column sort
-            if (sortOrder === 'asc') {
-                console.log('55')
-                result = result.sort((a, b) => {
-                    if (a[sortField] > b[sortField]) {
-                        return 1;
-                    } else if (b[sortField] > a[sortField]) {
-                        return -1;
-                    }
-                    return 0;
-                });
-            } else {
-                console.log('66')
-                result = result.sort((a, b) => {
-                    if (a[sortField] > b[sortField]) {
-                        return -1;
-                    } else if (b[sortField] > a[sortField]) {
-                        return 1;
-                    }
-                    return 0;
-                });
-            }
-            this.setState(() => ({
-                page,
-                instituteList: result,
-                totalSize: 20,
-                sizePerPage
-            }));
-        }, 100);
+                this.setState(() => ({
+                    page,
+                    instituteList: result,
+                    totalSize: 20,
+                    sizePerPage
+                }));
+            }, 100);
+        }else {
+            this.setState({
+                page: page,
+                sizePerPage: sizePerPage,
+                isLoading: true
+            });
+            // get data for next page
+            setTimeout(() => {
+                this.setState(() => ({
+                    data: this.getBranchList(),
+                }));
+            }, 100);
+        }
     }
 
     render() {
