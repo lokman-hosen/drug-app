@@ -15,6 +15,7 @@ class Branch extends React.Component {
             page: 1,
             sizePerPage: 5,
             totalRecord: 50,
+            sortOrder: ['asc', 'desc']
         };
         this.handleTableChange = this.handleTableChange.bind(this);
     }
@@ -71,12 +72,14 @@ class Branch extends React.Component {
     // call this function when click on pagination button
     handleTableChange = (type, { page, sizePerPage, filters, sortField, sortOrder, cellEdit }) => {
         const currentIndex = (page - 1) * sizePerPage;
+        //get sortOrder from state to sort randomly
+        var item = this.state.sortOrder.sort(function() {return 0.5 - Math.random()})[0];
         console.log(sortOrder);
         setTimeout(() => {
-
+            const sortOrder = item
             let result = this.state.instituteList;
             // Handle column filters
-            result = result.filter((row) => {
+            /*result = result.filter((row) => {
                 console.log('11')
                 let valid = true;
                 for (const dataField in filters) {
@@ -92,7 +95,7 @@ class Branch extends React.Component {
                     if (!valid) break;
                 }
                 return valid;
-            });
+            });*/
             // Handle column sort
             if (sortOrder === 'asc') {
                 console.log('55')
@@ -154,6 +157,7 @@ class Branch extends React.Component {
             {
                 dataField: 'id',
                 text: 'Sr No',
+                sort: true
             },
             {
                 dataField: 'name',
@@ -196,13 +200,8 @@ class Branch extends React.Component {
             },
         ];
 
-        const defaultSorted = [{
-            dataField: 'name',
-            order: 'desc'
-        }];
 
         // take all values from state
-        //const { instituteList, sizePerPage, page, totalRecord } = this.state;
         const { instituteList, sizePerPage, page , totalRecord} = this.state;
 
         return (
