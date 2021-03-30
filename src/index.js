@@ -11,6 +11,7 @@ import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css
 
 
 
+
 ReactDOM.render(
   <React.StrictMode>
       <Router>
