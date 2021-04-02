@@ -63,10 +63,10 @@ class Drug extends React.Component {
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Name</th>
+                                                <th scope="col">Price</th>
                                                 <th scope="col">Quantity</th>
-                                                <th scope="col">Category</th>
                                                 <th scope="col">Company</th>
-                                                <th scope="col">Generic Name</th>
+                                                <th scope="col">Side effects</th>
                                                 <th scope="col" className="action-column">Action</th>
                                             </tr>
                                             </thead>
@@ -77,10 +77,10 @@ class Drug extends React.Component {
                                                     <tr key={drug.id}>
                                                         <th scope="row">{index + 1}</th>
                                                         <td>{drug.name}</td>
+                                                        <td>{drug.price}</td>
                                                         <td>{drug.quantity}</td>
-                                                        <td>{drug.category}</td>
-                                                        <td>{drug.company}</td>
-                                                        <td>{drug.genericName}</td>
+                                                        <td>{drug.pharmaceutical}</td>
+                                                        <td>{drug.side_effects}</td>
                                                         <td>
                                                             <a className="btn btn-success btn-sm" href={`/drug/${drug.id}`} role="button">View</a>
                                                         </td>
