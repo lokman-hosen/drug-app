@@ -85,7 +85,7 @@ class BranchCreate extends React.Component {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
-                                <div className="text-end"><a className="btn btn-info btn-sm" href="/institute">Back</a></div>
+                                <div className="text-end"><a className="btn btn-info btn-sm" href="/branch">Back</a></div>
                                 {!this.state.isLoading ?
                                     <form onSubmit={this.formSubmit}>
 

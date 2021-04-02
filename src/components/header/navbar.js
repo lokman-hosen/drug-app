@@ -16,7 +16,7 @@ function Navbar() {
                 <div className="navbar-nav">
                     <Link className={`nav-link ${currentRoute == '' ? 'active' : ''}`} aria-current="page" to="/">Home</Link>
                     <Link className={`nav-link ${currentRoute == 'hospital' ? 'active' : ''}`} to="/hospital">Hospitals</Link>
-                    <Link className={`nav-link ${currentRoute == 'institute' ? 'active' : ''}`} to="/institute">Branches</Link>
+                    <Link className={`nav-link ${currentRoute == 'branch' ? 'active' : ''}`} to="/branch">Branches</Link>
                     <Link className={`nav-link ${currentRoute == 'drug' ? 'active' : ''}`} to="/drug">Drugs</Link>
                     <Link className={`nav-link ${currentRoute == 'branding' ? 'active' : ''}`} to="/branding">Advertisement</Link>
                 </div>

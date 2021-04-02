@@ -205,7 +205,7 @@ class Branch extends React.Component {
                             <button className="btn btn-danger btn-sm me-1 py-0" type="button" onClick={() => this.deleteItem(row.id)}>
                                 <i className="fa fa-trash-o" aria-hidden="true"></i>
                             </button>
-                            <a className="btn btn-success btn-sm py-0" href={`/hospital/${row.id}/edit`} role="button">
+                            <a className="btn btn-success btn-sm py-0" href={`/branch/${row.id}/edit`} role="button">
                                 <i className="fa fa-edit"></i>
                             </a>
                         </h5>

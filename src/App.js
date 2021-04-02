@@ -26,9 +26,9 @@ function App() {
         <Route path="/branding" component={Advertisement} exact />
 
 
-        <Route path="/institute" component={Branch} exact />
-        <Route path="/institute/create" component={BranchCreate} exact />
-        <Route path="/institute/:id/edit" component={BranchEdit} exact />
+        <Route path="/branch" component={Branch} exact />
+        <Route path="/branch/create" component={BranchCreate} exact />
+        <Route path="/branch/:id/edit" component={BranchEdit} exact />
       </Switch>
     </div>
   );

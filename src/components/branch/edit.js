@@ -27,7 +27,7 @@ class BranchEdit extends React.Component {
     // get hospital list
     getHospitalList(){
         this.setState({ isLoading: true})
-        axios.get('http://localhost:3005/api/v1/hospital-list').then(response => {
+        axios.get('http://localhost:3005/api/v1/hospital').then(response => {
             this.setState({
                 hospitalList:response.data.hospitalList,
                 isLoading: false,
@@ -71,7 +71,7 @@ class BranchEdit extends React.Component {
             address: this.state.address,
             contact_numbers: this.state.contact_numbers,
         }).then(function (response) {
-                history.push("/institute");
+                history.push("/branch");
             }).catch((err) => {
             console.log("Error: ", err.response.data.errors);
             this.setState({
@@ -91,7 +91,7 @@ class BranchEdit extends React.Component {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-12">
-                                <div className="text-end"><a className="btn btn-info btn-sm" href="/institute">Back</a></div>
+                                <div className="text-end"><a className="btn btn-info btn-sm" href="/branch">Back</a></div>
                                 {!this.state.isLoading ?
                                     <form onSubmit={this.updateBranch}>
 
