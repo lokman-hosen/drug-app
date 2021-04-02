@@ -10,6 +10,7 @@ import Hospital from "./components/hospital/list";
 import HospitalDetail from "./components/hospital/view";
 import Drug from "./components/drugs/list";
 import Advertisement from "./components/branding/list";
+import DrugDetail from "./components/drugs/view";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/hospital/:id" component={HospitalDetail} exact />
 
         <Route path="/drug" component={Drug} exact />
+        <Route path="/drug/:id" component={DrugDetail} exact />
         <Route path="/branding" component={Advertisement} exact />
 
 
