@@ -57,12 +57,11 @@ class DrugDetail extends React.Component {
                                         <div className="ps-2 mt-2">
                                             <p className="mb-1">Name: {drug.name}</p>
                                             <p className="mb-1">Price: {drug.price}</p>
-                                            <p className="mb-1">Quantity: {drug.quantity}</p>
+                                            <p className="mb-0">Quantity: {drug.quantity}</p>
                                         </div>
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body">
-                                            <h5 className="card-title">Card title</h5>
                                             <ul className="list-group list-group-flush">
                                                 <li className="list-group-item">Packet Size: {drug.packet_size}</li>
                                                 <li className="list-group-item">Company: {drug.pharmaceutical}</li>
