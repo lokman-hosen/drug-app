@@ -1,7 +1,9 @@
 import react from 'react'
-import { Link } from 'react-router-dom';
+import { Link , useLocation} from 'react-router-dom';
 
 function Navbar() {
+    //const location = useLocation();
+    const currentRoute = useLocation().pathname;
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
             <div className="container py-2">
@@ -11,11 +13,11 @@ function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav">
-                    <Link className="nav-link active" aria-current="page" to="/">Home</Link>
-                    <Link className="nav-link" to="/hospital">Hospitals</Link>
-                    <Link className="nav-link" to="/institute">Branches</Link>
-                    <Link className="nav-link" to="/drug">Drugs</Link>
-                    <Link className="nav-link" to="/branding">Advertisement</Link>
+                    <Link className={`nav-link ${currentRoute == '/' ? 'active' : ''}`} aria-current="page" to="/">Home</Link>
+                    <Link className={`nav-link ${currentRoute == '/hospital' ? 'active' : ''}`} to="/hospital">Hospitals</Link>
+                    <Link className={`nav-link ${currentRoute == '/institute' ? 'active' : ''}`} to="/institute">Branches</Link>
+                    <Link className={`nav-link ${currentRoute == '/drug' ? 'active' : ''}`} to="/drug">Drugs</Link>
+                    <Link className={`nav-link ${currentRoute == '/branding' ? 'active' : ''}`} to="/branding">Advertisement</Link>
                 </div>
                 </div>
             </div>
